@@ -59,7 +59,7 @@ function App() {
   console.log(user);
 
   return (
-    <Router>
+    <Router basename="https://master.d2g1h9613c82mi.amplifyapp.com/">
       <Switch>
         <Route exact path="/">
           <Homepage />
