@@ -1,4 +1,4 @@
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Amplify, { Auth } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
@@ -59,7 +59,7 @@ function App() {
   console.log(user);
 
   return (
-    <Router basename="https://master.d2g1h9613c82mi.amplifyapp.com/">
+    <Router>
       <Switch>
         <Route exact path="/">
           <Homepage />
