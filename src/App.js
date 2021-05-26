@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Amplify, { Auth } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
