@@ -1,5 +1,5 @@
 import Amplify, { Auth } from "aws-amplify";
-import awsconfig from "./aws-exports";
+import awsconfig from "../../aws-exports";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
