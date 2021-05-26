@@ -1,0 +1,58 @@
+type Campaign @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["adops"], operations: [read, create, update, delete]}, {allow: groups, groups: ["sales"], operations: [read, update]}]) @key(name: "byClient", fields: ["clientID"]) {
+  id: ID!
+  booking_reference: String
+  campaign_name: String
+  contact_person: String
+  booking_type: String
+  campaign_type: String
+  revenue_type: String
+  start_date: AWSDate
+  end_date: AWSDate
+  unit_rate: Float
+  goal: Int
+  budget: Float
+  addon_commision_type: String
+  addon_commision_value: Int
+  bo_file_path: String
+  instructions: String
+  delivery_comments: String
+  date_created: AWSDateTime
+  date_modified: AWSDateTime
+  status: String
+  impressions: Int
+  clicks: Int
+  ctr: Float
+  visits: Int
+  views: Int
+  completed_views: Int
+  conversions: Int
+  viewability: Float
+  media_cost: Float
+  clientID: ID
+}
+
+type Client @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["adops"], operations: [read, create, update, delete]}, {allow: groups, groups: ["sales"], operations: [read, update]}]) {
+  id: ID!
+  name: String
+  client_type: String
+  country: String
+  address: String
+  website: AWSURL
+  non_person_email: AWSEmail
+  billing_contact_name: String
+  billing_contact_email: AWSEmail
+  tax_id: String
+  main_contact_name: String
+  main_contact_email: AWSEmail
+  main_contact_phone: AWSPhone
+  skype_or_gmeet: String
+  sales_manager_email: AWSEmail
+  account_manager: String
+  kickback_type: String
+  kickback_value: Int
+  billing_entity: String
+  date_created: AWSDateTime
+  date_modified: AWSDateTime
+  Campaigns: [Campaign] @connection(keyName: "byClient", fields: ["id"])
+}
+ 
