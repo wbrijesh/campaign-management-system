@@ -79,9 +79,7 @@ export default function ClientsMain() {
                     <p className="text-gray-900 font-medium hover:text-gray-600">
                       {client.name}
                     </p>
-                    <p className="text-gray-500">
-                      {client.website.replace(/(^\w+:|^)\/\//, "")}
-                    </p>
+                    <p className="text-gray-500">{client.website}</p>
                   </div>
                 </div>
               </li>
