@@ -4,10 +4,11 @@ import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { DataStore } from "@aws-amplify/datastore";
-import { Client } from "../../models";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import logo from "../../logo.svg";
+import { Client } from "../../models";
+import CampaignsMain from "./CampaignsMain";
 import {
   HomeIcon,
   MenuAlt1Icon,
@@ -16,13 +17,13 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { SearchIcon, SelectorIcon } from "@heroicons/react/solid";
-import ClientsMain from "./ClientsMain";
 import {
   LinkIcon,
   PlusIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
+import { Campaign } from "../../models";
 
 const plans = [{ name: "Agency" }, { name: "Brand" }];
 const kickbacks = [{ name: "Revenue" }, { name: "Cost" }];
@@ -31,15 +32,15 @@ Amplify.configure(awsconfig);
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon, current: false },
-  { name: "Clients", href: "/clients", icon: BriefcaseIcon, current: true },
-  { name: "Campaigns", href: "/campaigns", icon: ChartBarIcon, current: false },
+  { name: "Clients", href: "/clients", icon: BriefcaseIcon, current: false },
+  { name: "Campaigns", href: "/campaigns", icon: ChartBarIcon, current: true },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function App() {
+function Campaigns() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   //   const [user, setUser] = useState(null);
@@ -63,32 +64,40 @@ function App() {
   // console.log(user);
 
   async function asyncSubmit() {
-    await DataStore.save(new Client(formik.values));
+    await DataStore.save(new Campaign(formik.values));
   }
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      client_type: "",
-      country: "",
-      address: "",
-      website: null,
-      non_person_email: null,
-      billing_contact_name: "",
-      billing_contact_email: null,
-      tax_id: "",
-      main_contact_name: "",
-      main_contact_email: null,
-      main_contact_phone: null,
-      skype_or_gmeet: "",
-      sales_manager_email: null,
-      account_manager: "",
-      kickback_type: null,
-      kickback_value: 1,
-      billing_entity: "",
+      booking_reference: "",
+      campaign_name: "",
+      contact_person: "",
+      booking_type: "",
+      campaign_type: "",
+      revenue_type: "",
+      start_date: "1970-01-01Z",
+      end_date: "1970-01-01Z",
+      unit_rate: null,
+      goal: null,
+      budget: null,
+      addon_commision_type: "",
+      addon_commision_value: null,
+      bo_file_path: "",
+      instructions: "",
+      delivery_comments: "",
       date_created: "1970-01-01T12:30:23.999Z",
       date_modified: "1970-01-01T12:30:23.999Z",
-      Campaigns: [],
+      status: "",
+      impressions: null,
+      clicks: null,
+      ctr: null,
+      visits: null,
+      views: null,
+      completed_views: null,
+      conversions: null,
+      viewability: null,
+      media_cost: null,
+      clientID: null,
     },
     onSubmit: (values) => {
       asyncSubmit();
@@ -99,6 +108,19 @@ function App() {
   // console.log(formik.values);
 
   const [open, setOpen] = useState(false);
+
+  const [clients, setClients] = useState([]);
+
+  useEffect(() => {
+    const func = async () => {
+      const models = await DataStore.query(Client);
+      setClients(models);
+    };
+
+    func();
+  }, []);
+
+  console.log(formik.values);
 
   return (
     <>
@@ -136,7 +158,7 @@ function App() {
                             <div className="flex items-start justify-between space-x-3">
                               <div className="space-y-1">
                                 <Dialog.Title className="text-lg font-medium text-gray-900">
-                                  New Client
+                                  New Campaign
                                 </Dialog.Title>
                                 <p className="text-sm text-gray-500">
                                   Get started by filling in the information
@@ -161,417 +183,375 @@ function App() {
 
                           {/* Divider container */}
                           <div className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-gray-200">
-                            {/* Project name */}
+                            {/* Campaign Name */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  Project name
+                                  Campaign Name
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
                                 <input
                                   type="text"
-                                  name="name"
-                                  id="name"
+                                  name="campaign_name"
+                                  id="campaign_name"
                                   onChange={formik.handleChange}
-                                  value={formik.values.name}
+                                  value={formik.values.campaign_name}
                                   className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                               </div>
                             </div>
 
-                            {/* client_type */}
+                            {/* Booking Reference */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  Kickback Type
-                                </label>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <input
-                                  type="radio"
-                                  name="client_type"
-                                  value="agency"
-                                  onChange={formik.handleChange}
-                                  className="mr-2"
-                                />
-                                Agency
-                                <br />
-                                <div className="mt-2"></div>
-                                <input
-                                  type="radio"
-                                  name="client_type"
-                                  value="brand"
-                                  onChange={formik.handleChange}
-                                  className="mr-2"
-                                />
-                                Brand
-                              </div>
-                            </div>
-
-                            {/* Country */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  Country
+                                  Booking Reference
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
                                 <input
                                   type="text"
-                                  name="country"
-                                  id="country"
+                                  name="booking_reference"
+                                  id="booking_reference"
                                   onChange={formik.handleChange}
-                                  value={formik.values.country}
+                                  value={formik.values.booking_reference}
                                   className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                               </div>
                             </div>
 
-                            {/* Address */}
+                            {/* Contact Person */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  Address
+                                  Contact Person
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
                                 <input
                                   type="text"
-                                  name="address"
-                                  id="address"
+                                  name="contact_person"
+                                  id="contact_person"
                                   onChange={formik.handleChange}
-                                  value={formik.values.address}
+                                  value={formik.values.contact_person}
                                   className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                               </div>
                             </div>
 
-                            {/* Website */}
+                            {/* booking_type */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  Website
+                                  Booking Type
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
-                                <input
-                                  type="url"
-                                  name="website"
-                                  id="website"
+                                <select
+                                  id="booking_type"
+                                  name="booking_type"
+                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  defaultValue="BO"
                                   onChange={formik.handleChange}
-                                  value={formik.values.website}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
+                                >
+                                  <option>BO</option>
+                                  <option>PMP</option>
+                                </select>
                               </div>
                             </div>
 
-                            {/* non_person_email */}
+                            {/* campaign_type */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  non_person_email
+                                  Campaign Type
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
-                                <input
-                                  type="text"
-                                  name="non_person_email"
-                                  id="non_person_email"
+                                <select
+                                  id="campaign_type"
+                                  name="campaign_type"
+                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  defaultValue="Video"
                                   onChange={formik.handleChange}
-                                  value={formik.values.non_person_email}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
+                                >
+                                  <option>Video</option>
+                                  <option>Display</option>
+                                  <option>Native</option>
+                                  <option>Search</option>
+                                  <option>Social</option>
+                                  <option>High Impact</option>
+                                  <option>Rich Media</option>
+                                  <option>Pop</option>
+                                  <option>Push</option>
+                                </select>
                               </div>
                             </div>
 
-                            {/* billing_contact_name */}
+                            {/* revenue_type */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  billing_contact_name
+                                  Revenue Type
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
-                                <input
-                                  type="text"
-                                  name="billing_contact_name"
-                                  id="billing_contact_name"
+                                <select
+                                  id="revenue_type"
+                                  name="revenue_type"
+                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  defaultValue="BO"
                                   onChange={formik.handleChange}
-                                  value={formik.values.billing_contact_name}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
+                                >
+                                  <option>CPM</option>
+                                  <option>CPC</option>
+                                  <option>CPCV</option>
+                                  <option>CPView</option>
+                                  <option>CPVisit</option>
+                                  <option>CPL</option>
+                                  <option>CPA</option>
+                                  <option>CPI</option>
+                                  <option>CPS</option>
+                                </select>
                               </div>
                             </div>
 
-                            {/* billing_contact_email */}
+                            {/* start_date */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  billing_contact_email
-                                </label>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <input
-                                  type="text"
-                                  name="billing_contact_email"
-                                  id="billing_contact_email"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.billing_contact_email}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
-                              </div>
-                            </div>
-
-                            {/* tax_id */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  tax_id
-                                </label>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <input
-                                  type="text"
-                                  name="tax_id"
-                                  id="tax_id"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.tax_id}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
-                              </div>
-                            </div>
-
-                            {/* main_contact_name */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  main_contact_name
+                                  start_date
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
                                 <input
                                   type="text"
-                                  name="main_contact_name"
-                                  id="main_contact_name"
+                                  name="start_date"
+                                  id="start_date"
                                   onChange={formik.handleChange}
-                                  value={formik.values.main_contact_name}
+                                  value={formik.values.start_date}
                                   className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                               </div>
                             </div>
 
-                            {/* main_contact_email */}
+                            {/* end_date */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  main_contact_email
+                                  end_date
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
                                 <input
                                   type="text"
-                                  name="main_contact_email"
-                                  id="main_contact_email"
+                                  name="end_date"
+                                  id="end_date"
                                   onChange={formik.handleChange}
-                                  value={formik.values.main_contact_email}
+                                  value={formik.values.end_date}
                                   className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                               </div>
                             </div>
 
-                            {/* main_contact_phone */}
+                            {/* unit_rate */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  main_contact_phone
-                                </label>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <input
-                                  type="text"
-                                  name="main_contact_phone"
-                                  id="main_contact_phone"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.main_contact_phone}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
-                              </div>
-                            </div>
-
-                            {/* skype_or_gmeet */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  skype_or_gmeet
-                                </label>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <input
-                                  type="text"
-                                  name="skype_or_gmeet"
-                                  id="skype_or_gmeet"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.skype_or_gmeet}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
-                              </div>
-                            </div>
-
-                            {/* sales_manager_email */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  sales_manager_email
-                                </label>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <input
-                                  type="text"
-                                  name="sales_manager_email"
-                                  id="sales_manager_email"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.sales_manager_email}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
-                              </div>
-                            </div>
-
-                            {/* account_manager */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  account_manager
-                                </label>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <input
-                                  type="text"
-                                  name="account_manager"
-                                  id="account_manager"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.account_manager}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                                />
-                              </div>
-                            </div>
-
-                            {/* kickback_type */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  Kickback Type
-                                </label>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <input
-                                  type="radio"
-                                  name="kickback_type"
-                                  value="Cost"
-                                  onChange={formik.handleChange}
-                                  className="mr-2"
-                                />
-                                Cost
-                                <br />
-                                <div className="mt-2"></div>
-                                <input
-                                  type="radio"
-                                  name="kickback_type"
-                                  value="Revenue"
-                                  onChange={formik.handleChange}
-                                  className="mr-2"
-                                />
-                                Revenue
-                              </div>
-                            </div>
-
-                            {/* kickback_value */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  kickback_value
+                                  Unit Rate
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
                                 <input
                                   type="number"
-                                  name="kickback_value"
-                                  id="kickback_value"
+                                  name="unit_rate"
+                                  id="unit_rate"
                                   onChange={formik.handleChange}
-                                  value={formik.values.kickback_value}
+                                  value={formik.values.unit_rate}
                                   className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                               </div>
                             </div>
 
-                            {/* billing_entity */}
+                            {/* Goal */}
                             <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                               <div>
                                 <label
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  billing_entity
+                                  Goal
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="goal"
+                                  id="goal"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.goal}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* budget */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  Budget
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="budget"
+                                  id="budget"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.budget}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* addon_commision_type */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  Addon Commision Type
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <select
+                                  id="addon_commision_type"
+                                  name="addon_commision_type"
+                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  defaultValue="Revenue"
+                                  onChange={formik.handleChange}
+                                >
+                                  <option>Revenue</option>
+                                  <option>Cost</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            {/* addon_commision_value */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  Addon Commision Value
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="addon_commision_value"
+                                  id="addon_commision_value"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.addon_commision_value}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* bo_file_path */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  bo_file_path
                                 </label>
                               </div>
                               <div className="sm:col-span-2">
                                 <input
                                   type="text"
-                                  name="billing_entity"
-                                  id="billing_entity"
+                                  name="bo_file_path"
+                                  id="bo_file_path"
                                   onChange={formik.handleChange}
-                                  value={formik.values.billing_entity}
+                                  value={formik.values.bo_file_path}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* instructions */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  instructions
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="text"
+                                  name="instructions"
+                                  id="instructions"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.instructions}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* delivery_comments */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  delivery_comments
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="text"
+                                  name="delivery_comments"
+                                  id="delivery_comments"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.delivery_comments}
                                   className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                               </div>
@@ -618,6 +598,253 @@ function App() {
                                   value={formik.values.date_modified}
                                   className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                              </div>
+                            </div>
+
+                            {/* status */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  status
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="text"
+                                  name="status"
+                                  id="status"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.status}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* impressions */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  impressions
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="impressions"
+                                  id="impressions"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.impressions}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* clicks */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  clicks
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="clicks"
+                                  id="clicks"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.clicks}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* ctr */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  ctr
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="ctr"
+                                  id="ctr"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.ctr}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* visits */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  visits
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="visits"
+                                  id="visits"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.visits}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* views */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  views
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="views"
+                                  id="views"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.views}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* completed_views */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  completed_views
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="completed_views"
+                                  id="completed_views"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.completed_views}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* conversions */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  conversions
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="conversions"
+                                  id="conversions"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.conversions}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* viewability */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  viewability
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="viewability"
+                                  id="viewability"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.viewability}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* media_cost */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  media_cost
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <input
+                                  type="number"
+                                  name="media_cost"
+                                  id="media_cost"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.media_cost}
+                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                />
+                              </div>
+                            </div>
+
+                            {/* clientID */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  Client ID
+                                </label>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <select
+                                  id="clientID"
+                                  name="clientID"
+                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  defaultValue="Revenue"
+                                  onChange={formik.handleChange}
+                                >
+                                  {clients.map((client) => (
+                                    <option value={client.id}>
+                                      {client.name}
+                                    </option>
+                                  ))}
+                                </select>
                               </div>
                             </div>
 
@@ -1088,7 +1315,7 @@ function App() {
               <div className="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
                 <div className="flex-1 min-w-0">
                   <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-                    Clients
+                    Campaigns
                   </h1>
                 </div>
                 <div className="mt-4 flex sm:mt-0 sm:ml-4">
@@ -1097,11 +1324,11 @@ function App() {
                     onClick={() => setOpen(!open)}
                     className="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3"
                   >
-                    New Client
+                    New Campaign
                   </button>
                 </div>
               </div>
-              <ClientsMain />
+              <CampaignsMain />
             </main>
           </div>
         </div>
@@ -1110,4 +1337,4 @@ function App() {
   );
 }
 
-export default withAuthenticator(App);
+export default withAuthenticator(Campaigns);

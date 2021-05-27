@@ -6,10 +6,10 @@ import { Fragment, useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import logo from "../../logo.svg";
 import {
-  ClockIcon,
   HomeIcon,
   MenuAlt1Icon,
-  ViewListIcon,
+  BriefcaseIcon,
+  ChartBarIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import { SearchIcon, SelectorIcon } from "@heroicons/react/solid";
@@ -19,8 +19,8 @@ Amplify.configure(awsconfig);
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon, current: true },
-  { name: "Clients", href: "/clients", icon: ViewListIcon, current: false },
-  { name: "Recent", href: "#", icon: ClockIcon, current: false },
+  { name: "Clients", href: "/clients", icon: BriefcaseIcon, current: false },
+  { name: "Campaigns", href: "/campaigns", icon: ChartBarIcon, current: false },
 ];
 
 function classNames(...classes) {

@@ -16,6 +16,9 @@ import { SearchIcon, SelectorIcon } from "@heroicons/react/solid";
 import ClientsMain from "./pages/client/ClientsMain";
 import Homepage from "./pages/home/Homepage";
 import Clients from "./pages/client/Clients";
+import ClientDetails from "./pages/client/ClientDetails";
+import Campaigns from "./pages/campaign/Campaigns";
+import CampaignDetails from "./pages/campaign/CampaignDetails";
 
 Amplify.configure(awsconfig);
 
@@ -64,8 +67,17 @@ function App() {
         <Route exact path="/">
           <Homepage />
         </Route>
-        <Route path="/clients">
+        <Route exact path="/clients">
           <Clients />
+        </Route>
+        <Route path="/clients/:id">
+          <ClientDetails />
+        </Route>
+        <Route exact path="/campaigns">
+          <Campaigns />
+        </Route>
+        <Route exact path="/campaigns/:id">
+          <CampaignDetails />
         </Route>
       </Switch>
     </Router>
