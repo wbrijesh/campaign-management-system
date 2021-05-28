@@ -1,11 +1,11 @@
 import Amplify, { Auth } from "aws-amplify";
 import awsconfig from "../../aws-exports";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { DataStore } from "@aws-amplify/datastore";
 import { Client } from "../../models";
-import { useFormik } from "formik";
+import { useFormik, Formik } from "formik";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../logo.svg";
 import {
@@ -14,6 +14,7 @@ import {
   BriefcaseIcon,
   ChartBarIcon,
   XIcon,
+  ExclamationIcon,
 } from "@heroicons/react/outline";
 import { SelectorIcon, PaperClipIcon } from "@heroicons/react/solid";
 
@@ -67,29 +68,55 @@ function ClientDetails() {
   }, []);
 
   async function asyncSubmit() {
-    await DataStore.save(new Client(formik.values));
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.name = formik.values.name;
+        updated.client_type = formik.values.client_type;
+        updated.country = formik.values.country;
+        updated.address = formik.values.address;
+        updated.website = formik.values.website;
+        updated.non_person_email = formik.values.non_person_email;
+        updated.billing_contact_name = formik.values.billing_contact_name;
+        updated.billing_contact_email = formik.values.billing_contact_email;
+        updated.tax_id = formik.values.tax_id;
+        updated.main_contact_name = formik.values.main_contact_name;
+        updated.main_contact_email = formik.values.main_contact_email;
+        updated.main_contact_phone = formik.values.main_contact_phone;
+        updated.skype_or_gmeet = formik.values.skype_or_gmeet;
+        updated.sales_manager_email = formik.values.sales_manager_email;
+        updated.account_manager = formik.values.account_manager;
+        updated.kickback_type = formik.values.kickback_type;
+        updated.kickback_value = formik.values.kickback_value;
+        updated.billing_entity = formik.values.billing_entity;
+        updated.date_created = formik.values.date_created;
+        updated.date_modified = formik.values.date_modified;
+      })
+    );
+    window.location.reload();
   }
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      client_type: "",
-      country: "",
-      address: "",
-      website: "",
-      non_person_email: "",
-      billing_contact_name: "",
-      billing_contact_email: "",
-      tax_id: "",
-      main_contact_name: "",
-      main_contact_email: "",
-      main_contact_phone: "",
-      skype_or_gmeet: "",
-      sales_manager_email: "",
-      account_manager: "",
-      kickback_type: "",
+      name: null,
+      client_type: null,
+      country: null,
+      address: null,
+      website: null,
+      non_person_email: null,
+      billing_contact_name: null,
+      billing_contact_email: null,
+      tax_id: null,
+      main_contact_name: null,
+      main_contact_email: null,
+      main_contact_phone: null,
+      skype_or_gmeet: null,
+      sales_manager_email: null,
+      account_manager: null,
+      kickback_type: null,
       kickback_value: null,
-      billing_entity: "",
+      billing_entity: null,
       date_created: "1970-01-01T12:30:23.999Z",
       date_modified: "1970-01-01T12:30:23.999Z",
       Campaigns: [],
@@ -106,12 +133,315 @@ function ClientDetails() {
 
   const [open, setOpen] = useState(false);
 
+  const [modalopen, setModalopen] = useState(false);
+  const cancelButtonRef = useRef(null);
+
+  async function editNameFunc() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.name = formik.values.name;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function client_type_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.client_type = formik.values.client_type;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function country_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.country = formik.values.country;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function address_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.address = formik.values.address;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function website_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.website = formik.values.website;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function non_person_email_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.non_person_email = formik.values.non_person_email;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function billing_contact_name_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.billing_contact_name = formik.values.billing_contact_name;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function billing_contact_email_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.billing_contact_email = formik.values.billing_contact_email;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function tax_id_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.tax_id = formik.values.tax_id;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function main_contact_name_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.main_contact_name = formik.values.main_contact_name;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function main_contact_email_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.main_contact_email = formik.values.main_contact_email;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function main_contact_phone_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.main_contact_phone = formik.values.main_contact_phone;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function skype_or_gmeet_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.skype_or_gmeet = formik.values.skype_or_gmeet;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function sales_manager_email_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.sales_manager_email = formik.values.sales_manager_email;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function account_manager_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.account_manager = formik.values.account_manager;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function kickback_type_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.kickback_type = formik.values.kickback_type;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function kickback_value_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.kickback_value = formik.values.kickback_value;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function billing_entity_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.billing_entity = formik.values.billing_entity;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function date_created_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.date_created = formik.values.date_created;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function date_modified_Func() {
+    const original = await DataStore.query(Client, id);
+
+    await DataStore.save(
+      Client.copyOf(original, (updated) => {
+        updated.date_modified = formik.values.date_modified;
+      })
+    );
+    window.location.reload();
+  }
+
   return (
     <>
       {
         (user,
         client && (
           <div className="h-screen flex overflow-hidden bg-white">
+            <Transition.Root show={modalopen} as={Fragment}>
+              <Dialog
+                as="div"
+                static
+                className="fixed z-10 inset-0 overflow-y-auto"
+                initialFocus={cancelButtonRef}
+                open={modalopen}
+                onClose={setModalopen}
+              >
+                <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                  </Transition.Child>
+
+                  {/* This element is to trick the browser into centering the modal contents. */}
+                  <span
+                    className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                    aria-hidden="true"
+                  >
+                    &#8203;
+                  </span>
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    enterTo="opacity-100 translate-y-0 sm:scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                    leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  >
+                    <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                      <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div className="sm:flex sm:items-start">
+                          <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <Dialog.Title
+                              as="h3"
+                              className="text-lg leading-6 font-medium text-gray-900"
+                            >
+                              Deactivate account
+                            </Dialog.Title>
+                            <div className="mt-2">
+                              <p className="text-sm text-gray-500">
+                                Are you sure you want to deactivate your
+                                account? All of your data will be permanently
+                                removed. This action cannot be undone.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button
+                          type="button"
+                          className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                          onClick={() => setModalopen(false)}
+                        >
+                          Deactivate
+                        </button>
+                        <button
+                          type="button"
+                          className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                          onClick={() => setModalopen(false)}
+                          ref={cancelButtonRef}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </Transition.Child>
+                </div>
+              </Dialog>
+            </Transition.Root>
             <Transition.Root show={open} as={Fragment}>
               <Dialog
                 as="div"
@@ -134,10 +464,7 @@ function ClientDetails() {
                       leaveTo="translate-x-full"
                     >
                       <div className="w-screen max-w-2xl">
-                        <form
-                          onSubmit={formik.handleSubmit}
-                          className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll"
-                        >
+                        <form className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
                           <div className="flex-1">
                             {/* Header */}
                             <div className="px-4 py-6 bg-gray-100 sm:px-6">
@@ -179,15 +506,22 @@ function ClientDetails() {
                                     Project name
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="name"
                                     id="name"
                                     onChange={formik.handleChange}
-                                    value={client.name}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.name}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={editNameFunc}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -198,7 +532,7 @@ function ClientDetails() {
                                     htmlFor="project_name"
                                     className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                   >
-                                    Kickback Type
+                                    Client Type
                                   </label>
                                 </div>
                                 <div className="sm:col-span-2">
@@ -220,6 +554,14 @@ function ClientDetails() {
                                     className="mr-2"
                                   />
                                   Brand
+                                  <br />
+                                  <button
+                                    type="button"
+                                    onClick={client_type_Func}
+                                    className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -233,15 +575,22 @@ function ClientDetails() {
                                     Country
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="country"
                                     id="country"
                                     onChange={formik.handleChange}
-                                    value={client.country}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.country}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={country_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -255,15 +604,22 @@ function ClientDetails() {
                                     Address
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="address"
                                     id="address"
                                     onChange={formik.handleChange}
-                                    value={client.address}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.address}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={address_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -277,15 +633,22 @@ function ClientDetails() {
                                     Website
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="url"
                                     name="website"
                                     id="website"
                                     onChange={formik.handleChange}
-                                    value={client.website}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.website}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={website_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -299,15 +662,22 @@ function ClientDetails() {
                                     non_person_email
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="non_person_email"
                                     id="non_person_email"
                                     onChange={formik.handleChange}
-                                    value={client.non_person_email}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.non_person_email}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={non_person_email_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -321,15 +691,22 @@ function ClientDetails() {
                                     billing_contact_name
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="billing_contact_name"
                                     id="billing_contact_name"
                                     onChange={formik.handleChange}
-                                    value={client.billing_contact_name}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.billing_contact_name}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={billing_contact_name_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -343,15 +720,22 @@ function ClientDetails() {
                                     billing_contact_email
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="billing_contact_email"
                                     id="billing_contact_email"
                                     onChange={formik.handleChange}
-                                    value={client.billing_contact_email}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.billing_contact_email}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={billing_contact_email_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -365,15 +749,22 @@ function ClientDetails() {
                                     tax_id
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="tax_id"
                                     id="tax_id"
                                     onChange={formik.handleChange}
-                                    value={client.tax_id}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.tax_id}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={tax_id_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -387,15 +778,22 @@ function ClientDetails() {
                                     main_contact_name
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="main_contact_name"
                                     id="main_contact_name"
                                     onChange={formik.handleChange}
-                                    value={client.main_contact_name}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.main_contact_name}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={main_contact_name_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -409,15 +807,22 @@ function ClientDetails() {
                                     main_contact_email
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="main_contact_email"
                                     id="main_contact_email"
                                     onChange={formik.handleChange}
-                                    value={client.main_contact_email}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.main_contact_email}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={main_contact_email_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -431,15 +836,22 @@ function ClientDetails() {
                                     main_contact_phone
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="main_contact_phone"
                                     id="main_contact_phone"
                                     onChange={formik.handleChange}
-                                    value={client.main_contact_phone}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.main_contact_phone}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={main_contact_phone_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -453,15 +865,22 @@ function ClientDetails() {
                                     skype_or_gmeet
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="skype_or_gmeet"
                                     id="skype_or_gmeet"
                                     onChange={formik.handleChange}
-                                    value={client.skype_or_gmeet}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.skype_or_gmeet}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={skype_or_gmeet_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -475,15 +894,22 @@ function ClientDetails() {
                                     sales_manager_email
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="sales_manager_email"
                                     id="sales_manager_email"
                                     onChange={formik.handleChange}
-                                    value={client.sales_manager_email}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.sales_manager_email}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={sales_manager_email_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -497,15 +923,22 @@ function ClientDetails() {
                                     account_manager
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="account_manager"
                                     id="account_manager"
                                     onChange={formik.handleChange}
-                                    value={client.account_manager}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.account_manager}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={account_manager_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -538,6 +971,14 @@ function ClientDetails() {
                                     className="mr-2"
                                   />
                                   Revenue
+                                  <br />
+                                  <button
+                                    type="button"
+                                    onClick={kickback_type_Func}
+                                    className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -551,15 +992,22 @@ function ClientDetails() {
                                     kickback_value
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="number"
                                     name="kickback_value"
                                     id="kickback_value"
                                     onChange={formik.handleChange}
-                                    value={client.kickback_value}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.kickback_value}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={kickback_value_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -573,15 +1021,22 @@ function ClientDetails() {
                                     billing_entity
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="billing_entity"
                                     id="billing_entity"
                                     onChange={formik.handleChange}
-                                    value={client.billing_entity}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.billing_entity}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={billing_entity_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -595,15 +1050,22 @@ function ClientDetails() {
                                     date_created
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="date_created"
                                     id="date_created"
                                     onChange={formik.handleChange}
-                                    value={client.date_created}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.date_created}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={date_created_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -617,15 +1079,22 @@ function ClientDetails() {
                                     date_modified
                                   </label>
                                 </div>
-                                <div className="sm:col-span-2">
+                                <div className="flex sm:col-span-2">
                                   <input
                                     type="text"
                                     name="date_modified"
                                     id="date_modified"
                                     onChange={formik.handleChange}
-                                    value={client.date_modified}
-                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formik.values.date_modified}
+                                    className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                   />
+                                  <button
+                                    type="button"
+                                    onClick={date_modified_Func}
+                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                  >
+                                    Edit
+                                  </button>
                                 </div>
                               </div>
 
@@ -1102,7 +1571,9 @@ function ClientDetails() {
                   <div className="mt-4 flex sm:mt-0 sm:ml-4">
                     <button
                       type="button"
-                      onClick={() => setOpen(!open)}
+                      onClick={() => {
+                        setOpen(!open);
+                      }}
                       className="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:order-1 sm:ml-3"
                     >
                       Edit Client

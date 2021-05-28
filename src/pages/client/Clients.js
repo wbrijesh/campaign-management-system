@@ -17,15 +17,6 @@ import {
 } from "@heroicons/react/outline";
 import { SearchIcon, SelectorIcon } from "@heroicons/react/solid";
 import ClientsMain from "./ClientsMain";
-import {
-  LinkIcon,
-  PlusIcon,
-  QuestionMarkCircleIcon,
-} from "@heroicons/react/solid";
-import { RadioGroup } from "@headlessui/react";
-
-const plans = [{ name: "Agency" }, { name: "Brand" }];
-const kickbacks = [{ name: "Revenue" }, { name: "Cost" }];
 
 Amplify.configure(awsconfig);
 
@@ -64,6 +55,7 @@ function App() {
 
   async function asyncSubmit() {
     await DataStore.save(new Client(formik.values));
+    window.location.reload();
   }
 
   const formik = useFormik({
