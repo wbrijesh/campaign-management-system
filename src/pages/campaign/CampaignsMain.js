@@ -1,5 +1,5 @@
 import { DataStore } from "@aws-amplify/datastore";
-import { Campaign } from "../../models";
+import { Campaign, Client } from "../../models";
 import { useState, useEffect } from "react";
 
 /* This example requires Tailwind CSS v2.0+ */
@@ -12,13 +12,6 @@ const people = [
   },
   // More people...
 ];
-
-async function getCampaigns() {
-  const models = await DataStore.query(Campaign);
-  console.log(models);
-}
-
-getCampaigns();
 
 export default function Example() {
   const [campaigns, setCampaigns] = useState([]);
@@ -50,7 +43,13 @@ export default function Example() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Client
+                    Status
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Goal
                   </th>
                   <th
                     scope="col"
@@ -76,7 +75,10 @@ export default function Example() {
                       {campaign.campaign_name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {campaign.clientID}
+                      {campaign.status}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {campaign.goal}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {campaign.campaign_type}

@@ -6,7 +6,7 @@ import { Dialog, Menu, Transition } from "@headlessui/react";
 import { DataStore } from "@aws-amplify/datastore";
 import { Client } from "../../models";
 import { useFormik, Formik } from "formik";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import logo from "../../logo.svg";
 import {
   HomeIcon,
@@ -355,6 +355,11 @@ function ClientDetails() {
     );
     window.location.reload();
   }
+
+  let history = useHistory();
+  const goToPreviousPath = () => {
+    history.goBack();
+  };
 
   return (
     <>
@@ -1584,6 +1589,7 @@ function ClientDetails() {
                         DataStore.delete(
                           await DataStore.query(Client, client.id)
                         );
+                        goToPreviousPath();
                       }}
                       className="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:order-1 sm:ml-3"
                     >

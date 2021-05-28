@@ -5,7 +5,7 @@ import { Fragment, useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { DataStore } from "@aws-amplify/datastore";
 import { useFormik } from "formik";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import logo from "../../logo.svg";
 import { Client } from "../../models";
 import {
@@ -424,6 +424,10 @@ function Campaigns() {
     );
     window.location.reload();
   }
+  let history = useHistory();
+  const goToPreviousPath = () => {
+    history.goBack();
+  };
 
   return (
     <>
@@ -1334,17 +1338,15 @@ function Campaigns() {
                                 <select
                                   id="clientID"
                                   name="clientID"
-                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                                   defaultValue="Revenue"
                                   onChange={formik.handleChange}
                                 >
-                                  {/* {clients.map((client) => (
+                                  {clients.map((client) => (
                                     <option value={client.id}>
                                       {client.name}
                                     </option>
-                                  ))} */}
-                                  <option>a</option>
-                                  <option>b</option>
+                                  ))}
                                 </select>
                                 <button
                                   type="button"
@@ -1551,6 +1553,7 @@ function Campaigns() {
                       DataStore.delete(
                         await DataStore.query(Campaign, campaign.id)
                       );
+                      goToPreviousPath();
                     }}
                     className="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:order-1 sm:ml-3"
                   >
