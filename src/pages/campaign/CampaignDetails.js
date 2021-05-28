@@ -106,6 +106,325 @@ function Campaigns() {
     func();
   }, []);
 
+  async function campaign_name_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.campaign_name = formik.values.campaign_name;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function booking_reference_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.booking_reference = formik.values.booking_reference;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function contact_person_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.contact_person = formik.values.contact_person;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function booking_type_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.booking_type = formik.values.booking_type;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function campaign_type_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.campaign_type = formik.values.campaign_type;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function revenue_type_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.revenue_type = formik.values.revenue_type;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function start_date_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.start_date = formik.values.start_date;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function end_date_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.end_date = formik.values.end_date;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function unit_rate_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.unit_rate = formik.values.unit_rate;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function goal_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.goal = formik.values.goal;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function budget_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.budget = formik.values.budget;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function addon_commision_type_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.addon_commision_type = formik.values.addon_commision_type;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function addon_commision_value_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.addon_commision_value = formik.values.addon_commision_value;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function bo_file_path_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.bo_file_path = formik.values.bo_file_path;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function instructions_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.instructions = formik.values.instructions;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function delivery_comments_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.delivery_comments = formik.values.delivery_comments;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function date_created_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.date_created = formik.values.date_created;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function date_modified_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.date_modified = formik.values.date_modified;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function status_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.status = formik.values.status;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function impressions_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.impressions = formik.values.impressions;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function clicks_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.clicks = formik.values.clicks;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function ctr_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.ctr = formik.values.ctr;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function visits_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.visits = formik.values.visits;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function views_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.views = formik.values.views;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function completed_views_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.completed_views = formik.values.completed_views;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function conversions_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.conversions = formik.values.conversions;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function viewability_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.viewability = formik.values.viewability;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function media_cost_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.media_cost = formik.values.media_cost;
+      })
+    );
+    window.location.reload();
+  }
+
+  async function clientID_Func() {
+    const original = await DataStore.query(Campaign, id);
+
+    await DataStore.save(
+      Campaign.copyOf(original, (updated) => {
+        updated.clientID = formik.values.clientID;
+      })
+    );
+    window.location.reload();
+  }
+
   return (
     <>
       {campaign && (
@@ -177,15 +496,22 @@ function Campaigns() {
                                   Campaign Name
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="campaign_name"
                                   id="campaign_name"
                                   onChange={formik.handleChange}
-                                  value={campaign.campaign_name}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.campaign_name}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={campaign_name_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -199,15 +525,22 @@ function Campaigns() {
                                   Booking Reference
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="booking_reference"
                                   id="booking_reference"
                                   onChange={formik.handleChange}
-                                  value={campaign.booking_reference}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.booking_reference}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={booking_reference_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -221,15 +554,22 @@ function Campaigns() {
                                   Contact Person
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="contact_person"
                                   id="contact_person"
                                   onChange={formik.handleChange}
-                                  value={campaign.contact_person}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.contact_person}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={contact_person_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -243,17 +583,24 @@ function Campaigns() {
                                   Booking Type
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <select
                                   id="booking_type"
                                   name="booking_type"
-                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                                   defaultValue="BO"
                                   onChange={formik.handleChange}
                                 >
                                   <option>BO</option>
                                   <option>PMP</option>
                                 </select>
+                                <button
+                                  type="button"
+                                  onClick={booking_type_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -267,11 +614,11 @@ function Campaigns() {
                                   Campaign Type
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <select
                                   id="campaign_type"
                                   name="campaign_type"
-                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                                   defaultValue="Video"
                                   onChange={formik.handleChange}
                                 >
@@ -285,6 +632,13 @@ function Campaigns() {
                                   <option>Pop</option>
                                   <option>Push</option>
                                 </select>
+                                <button
+                                  type="button"
+                                  onClick={campaign_type_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -298,11 +652,11 @@ function Campaigns() {
                                   Revenue Type
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <select
                                   id="revenue_type"
                                   name="revenue_type"
-                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                                   defaultValue="BO"
                                   onChange={formik.handleChange}
                                 >
@@ -316,6 +670,13 @@ function Campaigns() {
                                   <option>CPI</option>
                                   <option>CPS</option>
                                 </select>
+                                <button
+                                  type="button"
+                                  onClick={revenue_type_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -329,15 +690,22 @@ function Campaigns() {
                                   start_date
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="start_date"
                                   id="start_date"
                                   onChange={formik.handleChange}
-                                  value={campaign.start_date}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.start_date}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={start_date_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -351,15 +719,22 @@ function Campaigns() {
                                   end_date
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="end_date"
                                   id="end_date"
                                   onChange={formik.handleChange}
-                                  value={campaign.end_date}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.end_date}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={end_date_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -373,15 +748,22 @@ function Campaigns() {
                                   Unit Rate
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="unit_rate"
                                   id="unit_rate"
                                   onChange={formik.handleChange}
-                                  value={campaign.unit_rate}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.unit_rate}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={unit_rate_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -395,15 +777,22 @@ function Campaigns() {
                                   Goal
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="goal"
                                   id="goal"
                                   onChange={formik.handleChange}
-                                  value={campaign.goal}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.goal}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={goal_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -417,15 +806,22 @@ function Campaigns() {
                                   Budget
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="budget"
                                   id="budget"
                                   onChange={formik.handleChange}
-                                  value={campaign.budget}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.budget}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={budget_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -439,17 +835,24 @@ function Campaigns() {
                                   Addon Commision Type
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <select
                                   id="addon_commision_type"
                                   name="addon_commision_type"
-                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                                   defaultValue="Revenue"
                                   onChange={formik.handleChange}
                                 >
                                   <option>Revenue</option>
                                   <option>Cost</option>
                                 </select>
+                                <button
+                                  type="button"
+                                  onClick={addon_commision_type_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -463,15 +866,22 @@ function Campaigns() {
                                   Addon Commision Value
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="addon_commision_value"
                                   id="addon_commision_value"
                                   onChange={formik.handleChange}
-                                  value={campaign.addon_commision_value}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.addon_commision_value}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={addon_commision_value_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -485,15 +895,22 @@ function Campaigns() {
                                   bo_file_path
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="bo_file_path"
                                   id="bo_file_path"
                                   onChange={formik.handleChange}
-                                  value={campaign.bo_file_path}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.bo_file_path}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={bo_file_path_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -507,15 +924,22 @@ function Campaigns() {
                                   instructions
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="instructions"
                                   id="instructions"
                                   onChange={formik.handleChange}
-                                  value={campaign.instructions}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.instructions}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={instructions_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -529,15 +953,22 @@ function Campaigns() {
                                   delivery_comments
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="delivery_comments"
                                   id="delivery_comments"
                                   onChange={formik.handleChange}
-                                  value={campaign.delivery_comments}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.delivery_comments}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={delivery_comments_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -551,15 +982,22 @@ function Campaigns() {
                                   date_created
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="date_created"
                                   id="date_created"
                                   onChange={formik.handleChange}
-                                  value={campaign.date_created}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.date_created}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={date_created_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -573,15 +1011,22 @@ function Campaigns() {
                                   date_modified
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="date_modified"
                                   id="date_modified"
                                   onChange={formik.handleChange}
-                                  value={campaign.date_modified}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.date_modified}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={date_modified_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -595,15 +1040,22 @@ function Campaigns() {
                                   status
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="text"
                                   name="status"
                                   id="status"
                                   onChange={formik.handleChange}
-                                  value={campaign.status}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.status}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={status_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -617,15 +1069,22 @@ function Campaigns() {
                                   impressions
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="impressions"
                                   id="impressions"
                                   onChange={formik.handleChange}
-                                  value={campaign.impressions}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.impressions}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={impressions_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -639,15 +1098,22 @@ function Campaigns() {
                                   clicks
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="clicks"
                                   id="clicks"
                                   onChange={formik.handleChange}
-                                  value={campaign.clicks}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.clicks}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={clicks_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -661,15 +1127,22 @@ function Campaigns() {
                                   ctr
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="ctr"
                                   id="ctr"
                                   onChange={formik.handleChange}
-                                  value={campaign.ctr}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.ctr}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={ctr_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -683,15 +1156,22 @@ function Campaigns() {
                                   visits
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="visits"
                                   id="visits"
                                   onChange={formik.handleChange}
-                                  value={campaign.visits}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.visits}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={visits_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -705,15 +1185,22 @@ function Campaigns() {
                                   views
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="views"
                                   id="views"
                                   onChange={formik.handleChange}
-                                  value={campaign.views}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.views}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={views_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -727,15 +1214,22 @@ function Campaigns() {
                                   completed_views
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="completed_views"
                                   id="completed_views"
                                   onChange={formik.handleChange}
-                                  value={campaign.completed_views}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.completed_views}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={completed_views_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -749,15 +1243,22 @@ function Campaigns() {
                                   conversions
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="conversions"
                                   id="conversions"
                                   onChange={formik.handleChange}
-                                  value={campaign.conversions}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.conversions}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={conversions_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -771,15 +1272,22 @@ function Campaigns() {
                                   viewability
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="viewability"
                                   id="viewability"
                                   onChange={formik.handleChange}
-                                  value={campaign.viewability}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.viewability}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={viewability_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -793,15 +1301,22 @@ function Campaigns() {
                                   media_cost
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <input
                                   type="number"
                                   name="media_cost"
                                   id="media_cost"
                                   onChange={formik.handleChange}
-                                  value={campaign.media_cost}
-                                  className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                  value={formik.values.media_cost}
+                                  className="mr-2 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
+                                <button
+                                  type="button"
+                                  onClick={media_cost_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
@@ -812,14 +1327,14 @@ function Campaigns() {
                                   htmlFor="project_name"
                                   className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
                                 >
-                                  Client ID
+                                  Client
                                 </label>
                               </div>
-                              <div className="sm:col-span-2">
+                              <div className="flex sm:col-span-2">
                                 <select
                                   id="clientID"
                                   name="clientID"
-                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                                   defaultValue="Revenue"
                                   onChange={formik.handleChange}
                                 >
@@ -831,6 +1346,13 @@ function Campaigns() {
                                   <option>a</option>
                                   <option>b</option>
                                 </select>
+                                <button
+                                  type="button"
+                                  onClick={clientID_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
                               </div>
                             </div>
 
