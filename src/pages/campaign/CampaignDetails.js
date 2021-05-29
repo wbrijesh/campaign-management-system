@@ -424,10 +424,17 @@ function Campaigns() {
     );
     window.location.reload();
   }
+
   let history = useHistory();
-  const goToPreviousPath = () => {
-    history.goBack();
-  };
+
+  // async function forceDelete() {
+  //   const modelToDelete = await DataStore.query(
+  //     Campaign,
+  //     "0d755911-64e5-46ad-b857-9eebd7e05a50"
+  //   );
+  //   DataStore.delete(modelToDelete);
+  // }
+  // forceDelete();
 
   return (
     <>
@@ -1338,15 +1345,17 @@ function Campaigns() {
                                 <select
                                   id="clientID"
                                   name="clientID"
-                                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                                   defaultValue="Revenue"
                                   onChange={formik.handleChange}
                                 >
-                                  {clients.map((client) => (
+                                  {/* {clients.map((client) => (
                                     <option value={client.id}>
                                       {client.name}
                                     </option>
-                                  ))}
+                                  ))} */}
+                                  <option>a</option>
+                                  <option>b</option>
                                 </select>
                                 <button
                                   type="button"
@@ -1550,10 +1559,8 @@ function Campaigns() {
                   <button
                     type="button"
                     onClick={async () => {
-                      DataStore.delete(
-                        await DataStore.query(Campaign, campaign.id)
-                      );
-                      goToPreviousPath();
+                      DataStore.delete(await DataStore.query(Campaign, id));
+                      history.goBack();
                     }}
                     className="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:order-1 sm:ml-3"
                   >

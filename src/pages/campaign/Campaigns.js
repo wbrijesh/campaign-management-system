@@ -65,6 +65,7 @@ function Campaigns() {
 
   async function asyncSubmit() {
     await DataStore.save(new Campaign(formik.values));
+    window.location.reload();
   }
 
   const formik = useFormik({

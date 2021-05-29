@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 async function getClients() {
   const models = await DataStore.query(Client);
-  console.log(models);
 }
 
 getClients();

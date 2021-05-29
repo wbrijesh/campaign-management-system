@@ -4,7 +4,7 @@ import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Fragment, useState, useRef, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { DataStore } from "@aws-amplify/datastore";
-import { Client } from "../../models";
+import { Client, Campaign } from "../../models";
 import { useFormik, Formik } from "formik";
 import { Link, useParams, useHistory } from "react-router-dom";
 import logo from "../../logo.svg";
@@ -18,9 +18,6 @@ import {
 } from "@heroicons/react/outline";
 import { SelectorIcon, PaperClipIcon } from "@heroicons/react/solid";
 
-const plans = [{ name: "Agency" }, { name: "Brand" }];
-const kickbacks = [{ name: "Revenue" }, { name: "Cost" }];
-
 Amplify.configure(awsconfig);
 
 const navigation = [
@@ -33,17 +30,22 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function ClientDetails() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+//   const [user, setUser] = useState(null);
+//   useEffect(() => {
+//     checkUser();
+//   }, []);
+//   async function checkUser() {
+//     const user = await Auth.currentAuthenticatedUser();
+//     setUser(user);
+//   }
 
-  //   const [user, setUser] = useState(null);
-  //   useEffect(() => {
-  //     checkUser();
-  //   }, []);
-  //   async function checkUser() {
-  //     const user = await Auth.currentAuthenticatedUser();
-  //     setUser(user);
-  //   }
+function ClientDetails() {
+  let history = useHistory();
+  const goToPreviousPath = () => {
+    history.goBack();
+  };
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -59,13 +61,32 @@ function ClientDetails() {
   const { id } = useParams();
 
   const [client, setClient] = useState(null);
-  useEffect(() => {
-    const models = DataStore.query(Client, id)
-      .then((models) => {
-        setClient(models);
-      })
-      .catch(() => setClient(null));
-  }, []);
+
+  const [campaigns, setCampaigns] = useState(null);
+
+  async function thisClient() {
+    const models = await DataStore.query(Client, id);
+    setClient(models);
+  }
+
+  thisClient();
+
+  // useEffect(() => {
+  //   thisClient
+  //     .then((value) => {
+  //       setCampaigns(await DataStore.query(Campaign)).filter(c => c.clientID === value));
+  //     })
+  //     .catch(() => setCampaigns(null));
+  // }, []);
+
+  async function getCampaigns() {
+    const campaignslist = (await DataStore.query(Campaign)).filter(
+      (c) => c.clientID === id
+    );
+    setCampaigns(campaignslist);
+  }
+
+  getCampaigns();
 
   async function asyncSubmit() {
     const original = await DataStore.query(Client, id);
@@ -128,8 +149,6 @@ function ClientDetails() {
   });
 
   // console.log(formik.values);
-
-  console.log(client);
 
   const [open, setOpen] = useState(false);
 
@@ -356,16 +375,12 @@ function ClientDetails() {
     window.location.reload();
   }
 
-  let history = useHistory();
-  const goToPreviousPath = () => {
-    history.goBack();
-  };
-
   return (
     <>
       {
         (user,
-        client && (
+        client,
+        campaigns && (
           <div className="h-screen flex overflow-hidden bg-white">
             <Transition.Root show={modalopen} as={Fragment}>
               <Dialog
@@ -1598,6 +1613,30 @@ function ClientDetails() {
                   </div>
                 </div>
                 {/* <p>{JSON.stringify(client)}</p> */}
+                {/* List Client Campaigns */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {campaigns.map((campaign) => (
+                    <div
+                      key={campaign.id}
+                      className="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <a href="#" className="focus:outline-none">
+                          <span
+                            className="absolute inset-0"
+                            aria-hidden="true"
+                          />
+                          <p className="text-sm font-medium text-gray-900">
+                            {campaign.campaign_name}
+                          </p>
+                          <p className="text-sm text-gray-500 truncate">
+                            {campaign.status}
+                          </p>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
                 <div className="bg-white shadow overflow-hidden sm:rounded-lg">
                   <div className="px-4 py-5 sm:px-6">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">
