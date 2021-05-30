@@ -1,17 +1,6 @@
 import { DataStore } from "@aws-amplify/datastore";
-import { Campaign, Client } from "../../models";
+import { Campaign } from "../../models";
 import { useState, useEffect } from "react";
-
-/* This example requires Tailwind CSS v2.0+ */
-const people = [
-  {
-    name: "Jane Cooper",
-    title: "Regional Paradigm Technician",
-    role: "Admin",
-    email: "jane.cooper@example.com",
-  },
-  // More people...
-];
 
 export default function Example() {
   const [campaigns, setCampaigns] = useState([]);

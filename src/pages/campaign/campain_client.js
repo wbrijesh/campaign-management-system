@@ -1,7 +1,6 @@
-import React, { useState, useEffect, Component } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { DataStore } from "@aws-amplify/datastore";
-import { Campaign, Client } from "../../models";
+import { Campaign } from "../../models";
 
 // export default function Campain_client() {
 //   const { id } = useParams();
@@ -32,7 +31,6 @@ import { Campaign, Client } from "../../models";
 export default function Campaign_client(props) {
   const id = props.valueFromParent;
   const [ncampaign, setnCampaign] = useState([]);
-  const [nclient, setnClient] = useState([]);
 
   useEffect(() => {
     const func = async () => {
@@ -40,7 +38,7 @@ export default function Campaign_client(props) {
       setnCampaign(models);
     };
     func();
-  }, []);
+  }, [id]);
 
   console.log("ncampaign", ncampaign);
 

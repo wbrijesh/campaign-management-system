@@ -1,11 +1,10 @@
 import Amplify, { Auth } from "aws-amplify";
 import awsconfig from "../../aws-exports";
-import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Fragment, useState, useRef, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { DataStore } from "@aws-amplify/datastore";
 import { Client, Campaign } from "../../models";
-import { useFormik, Formik } from "formik";
+import { useFormik } from "formik";
 import { Link, useParams, useHistory } from "react-router-dom";
 import logo from "../../logo.svg";
 import {
@@ -14,15 +13,13 @@ import {
   BriefcaseIcon,
   ChartBarIcon,
   XIcon,
-  ExclamationIcon,
 } from "@heroicons/react/outline";
-import { SelectorIcon, PaperClipIcon } from "@heroicons/react/solid";
 
 Amplify.configure(awsconfig);
 
 const navigation = [
-  { name: "Home", href: "/", icon: HomeIcon, current: true },
-  { name: "Clients", href: "/clients", icon: BriefcaseIcon, current: false },
+  { name: "Home", href: "/", icon: HomeIcon, current: false },
+  { name: "Clients", href: "/clients", icon: BriefcaseIcon, current: true },
   { name: "Campaigns", href: "/campaigns", icon: ChartBarIcon, current: false },
 ];
 
@@ -41,9 +38,6 @@ function classNames(...classes) {
 
 function ClientDetails() {
   let history = useHistory();
-  const goToPreviousPath = () => {
-    history.goBack();
-  };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -68,16 +62,7 @@ function ClientDetails() {
     const models = await DataStore.query(Client, id);
     setClient(models);
   }
-
   thisClient();
-
-  // useEffect(() => {
-  //   thisClient
-  //     .then((value) => {
-  //       setCampaigns(await DataStore.query(Campaign)).filter(c => c.clientID === value));
-  //     })
-  //     .catch(() => setCampaigns(null));
-  // }, []);
 
   async function getCampaigns() {
     const campaignslist = (await DataStore.query(Campaign)).filter(
@@ -85,54 +70,23 @@ function ClientDetails() {
     );
     setCampaigns(campaignslist);
   }
-
   getCampaigns();
-
-  async function asyncSubmit() {
-    const original = await DataStore.query(Client, id);
-
-    await DataStore.save(
-      Client.copyOf(original, (updated) => {
-        updated.name = formik.values.name;
-        updated.client_type = formik.values.client_type;
-        updated.country = formik.values.country;
-        updated.address = formik.values.address;
-        updated.website = formik.values.website;
-        updated.non_person_email = formik.values.non_person_email;
-        updated.billing_contact_name = formik.values.billing_contact_name;
-        updated.billing_contact_email = formik.values.billing_contact_email;
-        updated.tax_id = formik.values.tax_id;
-        updated.main_contact_name = formik.values.main_contact_name;
-        updated.main_contact_email = formik.values.main_contact_email;
-        updated.main_contact_phone = formik.values.main_contact_phone;
-        updated.skype_or_gmeet = formik.values.skype_or_gmeet;
-        updated.sales_manager_email = formik.values.sales_manager_email;
-        updated.account_manager = formik.values.account_manager;
-        updated.kickback_type = formik.values.kickback_type;
-        updated.kickback_value = formik.values.kickback_value;
-        updated.billing_entity = formik.values.billing_entity;
-        updated.date_created = formik.values.date_created;
-        updated.date_modified = formik.values.date_modified;
-      })
-    );
-    window.location.reload();
-  }
 
   const formik = useFormik({
     initialValues: {
-      name: null,
+      name: "",
       client_type: null,
-      country: null,
-      address: null,
+      country: "",
+      address: "",
       website: null,
       non_person_email: null,
-      billing_contact_name: null,
+      billing_contact_name: "",
       billing_contact_email: null,
-      tax_id: null,
-      main_contact_name: null,
+      tax_id: "",
+      main_contact_name: "",
       main_contact_email: null,
       main_contact_phone: null,
-      skype_or_gmeet: null,
+      skype_or_gmeet: "",
       sales_manager_email: null,
       account_manager: null,
       kickback_type: null,
@@ -142,13 +96,7 @@ function ClientDetails() {
       date_modified: "1970-01-01T12:30:23.999Z",
       Campaigns: [],
     },
-    onSubmit: (values) => {
-      asyncSubmit();
-      console.log(values);
-    },
   });
-
-  // console.log(formik.values);
 
   const [open, setOpen] = useState(false);
 
@@ -156,10 +104,8 @@ function ClientDetails() {
   const cancelButtonRef = useRef(null);
 
   async function editNameFunc() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.name = formik.values.name;
       })
     );
@@ -167,10 +113,8 @@ function ClientDetails() {
   }
 
   async function client_type_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.client_type = formik.values.client_type;
       })
     );
@@ -178,21 +122,22 @@ function ClientDetails() {
   }
 
   async function country_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.country = formik.values.country;
       })
     );
-    window.location.reload();
+
+    // console.log("updated: ", formik.values.country);
+    // console.log("original: ", client.country);
+    // console.log("client before update: ", client);
+    // console.log(user);
+    // window.location.reload();
   }
 
   async function address_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.address = formik.values.address;
       })
     );
@@ -200,10 +145,8 @@ function ClientDetails() {
   }
 
   async function website_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.website = formik.values.website;
       })
     );
@@ -211,10 +154,8 @@ function ClientDetails() {
   }
 
   async function non_person_email_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.non_person_email = formik.values.non_person_email;
       })
     );
@@ -222,10 +163,8 @@ function ClientDetails() {
   }
 
   async function billing_contact_name_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.billing_contact_name = formik.values.billing_contact_name;
       })
     );
@@ -233,10 +172,8 @@ function ClientDetails() {
   }
 
   async function billing_contact_email_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.billing_contact_email = formik.values.billing_contact_email;
       })
     );
@@ -244,10 +181,8 @@ function ClientDetails() {
   }
 
   async function tax_id_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.tax_id = formik.values.tax_id;
       })
     );
@@ -255,10 +190,8 @@ function ClientDetails() {
   }
 
   async function main_contact_name_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.main_contact_name = formik.values.main_contact_name;
       })
     );
@@ -266,10 +199,8 @@ function ClientDetails() {
   }
 
   async function main_contact_email_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.main_contact_email = formik.values.main_contact_email;
       })
     );
@@ -277,10 +208,8 @@ function ClientDetails() {
   }
 
   async function main_contact_phone_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.main_contact_phone = formik.values.main_contact_phone;
       })
     );
@@ -288,10 +217,8 @@ function ClientDetails() {
   }
 
   async function skype_or_gmeet_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.skype_or_gmeet = formik.values.skype_or_gmeet;
       })
     );
@@ -299,10 +226,8 @@ function ClientDetails() {
   }
 
   async function sales_manager_email_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.sales_manager_email = formik.values.sales_manager_email;
       })
     );
@@ -310,10 +235,8 @@ function ClientDetails() {
   }
 
   async function account_manager_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.account_manager = formik.values.account_manager;
       })
     );
@@ -321,10 +244,8 @@ function ClientDetails() {
   }
 
   async function kickback_type_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.kickback_type = formik.values.kickback_type;
       })
     );
@@ -332,10 +253,8 @@ function ClientDetails() {
   }
 
   async function kickback_value_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.kickback_value = formik.values.kickback_value;
       })
     );
@@ -343,10 +262,8 @@ function ClientDetails() {
   }
 
   async function billing_entity_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.billing_entity = formik.values.billing_entity;
       })
     );
@@ -354,10 +271,8 @@ function ClientDetails() {
   }
 
   async function date_created_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.date_created = formik.values.date_created;
       })
     );
@@ -365,10 +280,8 @@ function ClientDetails() {
   }
 
   async function date_modified_Func() {
-    const original = await DataStore.query(Client, id);
-
     await DataStore.save(
-      Client.copyOf(original, (updated) => {
+      Client.copyOf(client, (updated) => {
         updated.date_modified = formik.values.date_modified;
       })
     );
@@ -1281,125 +1194,9 @@ function ClientDetails() {
                                   </span>
                                 </span>
                               </span>
-                              <SelectorIcon
-                                className="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                aria-hidden="true"
-                              />
                             </span>
                           </Menu.Button>
                         </div>
-                        <Transition
-                          show={open}
-                          as={Fragment}
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          <Menu.Items
-                            static
-                            className="z-10 mx-3 origin-top absolute right-0 left-0 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
-                          >
-                            <div className="py-1">
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? "bg-gray-100 text-gray-900"
-                                        : "text-gray-700",
-                                      "block px-4 py-2 text-sm"
-                                    )}
-                                  >
-                                    View profile
-                                  </a>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? "bg-gray-100 text-gray-900"
-                                        : "text-gray-700",
-                                      "block px-4 py-2 text-sm"
-                                    )}
-                                  >
-                                    Settings
-                                  </a>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? "bg-gray-100 text-gray-900"
-                                        : "text-gray-700",
-                                      "block px-4 py-2 text-sm"
-                                    )}
-                                  >
-                                    Notifications
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            </div>
-                            <div className="py-1">
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? "bg-gray-100 text-gray-900"
-                                        : "text-gray-700",
-                                      "block px-4 py-2 text-sm"
-                                    )}
-                                  >
-                                    Get desktop app
-                                  </a>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? "bg-gray-100 text-gray-900"
-                                        : "text-gray-700",
-                                      "block px-4 py-2 text-sm"
-                                    )}
-                                  >
-                                    Support
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            </div>
-                            <div className="py-1">
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="#"
-                                    className={classNames(
-                                      active
-                                        ? "bg-gray-100 text-gray-900"
-                                        : "text-gray-700",
-                                      "block px-4 py-2 text-sm"
-                                    )}
-                                  >
-                                    Logout
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            </div>
-                          </Menu.Items>
-                        </Transition>
                       </>
                     )}
                   </Menu>
@@ -1462,118 +1259,6 @@ function ClientDetails() {
                               />
                             </Menu.Button>
                           </div>
-                          <Transition
-                            show={open}
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                          >
-                            <Menu.Items
-                              static
-                              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
-                            >
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? "bg-gray-100 text-gray-900"
-                                          : "text-gray-700",
-                                        "block px-4 py-2 text-sm"
-                                      )}
-                                    >
-                                      View profile
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? "bg-gray-100 text-gray-900"
-                                          : "text-gray-700",
-                                        "block px-4 py-2 text-sm"
-                                      )}
-                                    >
-                                      Settings
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? "bg-gray-100 text-gray-900"
-                                          : "text-gray-700",
-                                        "block px-4 py-2 text-sm"
-                                      )}
-                                    >
-                                      Notifications
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? "bg-gray-100 text-gray-900"
-                                          : "text-gray-700",
-                                        "block px-4 py-2 text-sm"
-                                      )}
-                                    >
-                                      Get desktop app
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? "bg-gray-100 text-gray-900"
-                                          : "text-gray-700",
-                                        "block px-4 py-2 text-sm"
-                                      )}
-                                    >
-                                      Support
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                              <div className="py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active
-                                          ? "bg-gray-100 text-gray-900"
-                                          : "text-gray-700",
-                                        "block px-4 py-2 text-sm"
-                                      )}
-                                    >
-                                      Logout
-                                    </a>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                            </Menu.Items>
-                          </Transition>
                         </>
                       )}
                     </Menu>
@@ -1594,7 +1279,7 @@ function ClientDetails() {
                       onClick={() => {
                         setOpen(!open);
                       }}
-                      className="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:order-1 sm:ml-3"
+                      className="order-0 mr-2 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:order-1 sm:ml-3"
                     >
                       Edit Client
                     </button>
@@ -1604,9 +1289,9 @@ function ClientDetails() {
                         DataStore.delete(
                           await DataStore.query(Client, client.id)
                         );
-                        goToPreviousPath();
+                        history.goBack();
                       }}
-                      className="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:order-1 sm:ml-3"
+                      className="order-0 mr-2 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:order-1 sm:ml-3"
                     >
                       Delete
                     </button>
@@ -1614,27 +1299,35 @@ function ClientDetails() {
                 </div>
                 {/* <p>{JSON.stringify(client)}</p> */}
                 {/* List Client Campaigns */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <h1 className="m-6 font-semibold	text-xl">
+                  Campaigns with {client.name}
+                </h1>
+                <div className="m-6 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {campaigns.map((campaign) => (
-                    <div
-                      key={campaign.id}
-                      className="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <a href="#" className="focus:outline-none">
-                          <span
-                            className="absolute inset-0"
-                            aria-hidden="true"
-                          />
-                          <p className="text-sm font-medium text-gray-900">
-                            {campaign.campaign_name}
-                          </p>
-                          <p className="text-sm text-gray-500 truncate">
-                            {campaign.status}
-                          </p>
-                        </a>
+                    <a href={`/campaigns/${campaign.id}`}>
+                      <div
+                        key={campaign.id}
+                        className="relative rounded-lg border border-gray-300 bg-gray-50 px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <a
+                            href={`/campaigns/${campaign.id}`}
+                            className="focus:outline-none"
+                          >
+                            <span
+                              className="absolute inset-0"
+                              aria-hidden="true"
+                            />
+                            <p className="text-sm font-medium text-gray-900">
+                              {campaign.campaign_name}
+                            </p>
+                            <p className="text-sm text-gray-500 truncate">
+                              {campaign.status}
+                            </p>
+                          </a>
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
                 <div className="bg-white shadow overflow-hidden sm:rounded-lg">

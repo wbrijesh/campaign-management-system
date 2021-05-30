@@ -1,40 +1,7 @@
-import { Dialog, Menu, Transition } from "@headlessui/react";
-import { Fragment, useState, useEffect } from "react";
-import { ChevronRightIcon } from "@heroicons/react/solid";
+import { useState, useEffect } from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import { Client } from "../../models";
 import { Link } from "react-router-dom";
-
-async function getClients() {
-  const models = await DataStore.query(Client);
-}
-
-getClients();
-
-const projects = [
-  {
-    id: 1,
-    title: "Client A",
-    initials: "CA",
-    team: "Engineering",
-    subtitle: "test.com",
-    lastUpdated: "March 17, 2020",
-    pinned: true,
-    bgColorClass: "bg-pink-600",
-  },
-  {
-    id: 2,
-    title: "Client B",
-    initials: "CB",
-    team: "Engineering",
-    subtitle: "demo.com",
-    lastUpdated: "March 17, 2020",
-    pinned: true,
-    bgColorClass: "bg-pink-600",
-  },
-  // More projects...
-];
-const pinnedProjects = projects.filter((project) => project.pinned);
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

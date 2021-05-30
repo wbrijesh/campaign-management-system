@@ -1,8 +1,8 @@
-import Amplify, { Auth } from "aws-amplify";
+import Amplify from "aws-amplify";
 import awsconfig from "../../aws-exports";
-import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 import { Fragment, useState, useEffect } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import { DataStore } from "@aws-amplify/datastore";
 import { useFormik } from "formik";
 import { Link, useParams, useHistory } from "react-router-dom";
@@ -15,7 +15,6 @@ import {
   ChartBarIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { SearchIcon, SelectorIcon } from "@heroicons/react/solid";
 import { Campaign } from "../../models";
 import CampaignDetailsMain from "./CampaignDetailsMain";
 
@@ -35,10 +34,6 @@ function Campaigns() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { id } = useParams();
-
-  async function asyncSubmit() {
-    await DataStore.save(new Campaign(formik.values));
-  }
 
   const formik = useFormik({
     initialValues: {
@@ -72,10 +67,6 @@ function Campaigns() {
       media_cost: null,
       clientID: null,
     },
-    onSubmit: (values) => {
-      asyncSubmit();
-      console.log(values);
-    },
   });
 
   // console.log(formik.values);
@@ -104,7 +95,7 @@ function Campaigns() {
     };
 
     func();
-  }, []);
+  }, [id]);
 
   async function campaign_name_Func() {
     const original = await DataStore.query(Campaign, id);
@@ -548,6 +539,40 @@ function Campaigns() {
                                 <button
                                   type="button"
                                   onClick={booking_reference_Func}
+                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                  Edit
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* clientID */}
+                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                              <div>
+                                <label
+                                  htmlFor="project_name"
+                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+                                >
+                                  Client
+                                </label>
+                              </div>
+                              <div className="flex sm:col-span-2">
+                                <select
+                                  id="clientID"
+                                  name="clientID"
+                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                  defaultValue="Revenue"
+                                  onChange={formik.handleChange}
+                                >
+                                  {clients.map((client) => (
+                                    <option value={client.id}>
+                                      {client.name}
+                                    </option>
+                                  ))}
+                                </select>
+                                <button
+                                  type="button"
+                                  onClick={clientID_Func}
                                   className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
                                   Edit
@@ -1331,62 +1356,7 @@ function Campaigns() {
                               </div>
                             </div>
 
-                            {/* clientID */}
-                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                              <div>
-                                <label
-                                  htmlFor="project_name"
-                                  className="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
-                                >
-                                  Client
-                                </label>
-                              </div>
-                              <div className="flex sm:col-span-2">
-                                <select
-                                  id="clientID"
-                                  name="clientID"
-                                  className="mt-1 mr-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                                  defaultValue="Revenue"
-                                  onChange={formik.handleChange}
-                                >
-                                  {/* {clients.map((client) => (
-                                    <option value={client.id}>
-                                      {client.name}
-                                    </option>
-                                  ))} */}
-                                  <option>a</option>
-                                  <option>b</option>
-                                </select>
-                                <button
-                                  type="button"
-                                  onClick={clientID_Func}
-                                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                  Edit
-                                </button>
-                              </div>
-                            </div>
-
                             {/* end */}
-                          </div>
-                        </div>
-
-                        {/* Action buttons */}
-                        <div className="flex-shrink-0 px-4 border-t border-gray-200 py-5 sm:px-6">
-                          <div className="space-x-3 flex justify-end">
-                            <button
-                              type="button"
-                              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                              onClick={() => setOpen(false)}
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                              Create
-                            </button>
                           </div>
                         </div>
                       </form>
